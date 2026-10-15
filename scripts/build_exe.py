@@ -134,9 +134,9 @@ def create_distribution_files(dist_path):
 - 首次运行时会在用户数据目录生成 config.json
 - 请勿把包含 API 密钥的 config.json 提交到代码仓库
 
-演示说明：
-- 本程序用于 AI 客服求职作品演示
-- 拼多多账号与模型服务需要在演示机器上单独配置
+应用说明：
+- 本程序为拼多多 AI 客服桌面应用
+- 拼多多账号与模型服务需要按部署环境单独配置
 """
 
     (dist_path / "README.txt").write_text(readme_content, encoding="utf-8")
@@ -164,7 +164,7 @@ def create_installer_script(dist_path):
 ; Agent-Customer 安装包脚本
 ; 需要 NSIS (https://nsis.sourceforge.io/)
 
-!define APP_NAME "Duncan AI客服项目演示"
+!define APP_NAME "Duncan AI 客服系统"
 !define APP_VERSION "1.1.0"
 !define APP_PUBLISHER "Duncan"
 !define APP_URL ""

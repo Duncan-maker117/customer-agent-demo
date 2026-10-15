@@ -29,7 +29,7 @@ class MainWindow(FluentWindow):
     def __init__(self):
         super().__init__()
         t = time.perf_counter()
-        self.setWindowTitle('Duncan 的 AI客服项目演示')
+        self.setWindowTitle('Duncan 的 AI 客服系统')
         self.setWindowIcon(QIcon(str(get_resource_path("icon/icon.ico"))))
         self.logger = get_logger("MainWindow")
         self.logger.info(f"  基础属性初始化: {time.perf_counter()-t:.2f}s")
@@ -136,12 +136,12 @@ class MainWindow(FluentWindow):
 
 
     def showProjectInfo(self):
-        """显示求职演示项目说明"""
+        """显示项目说明"""
         try:
             tip = TeachingTip.create(
                 target=self.navigationInterface,
                 icon=FIF.DOCUMENT,
-                title="Duncan 的 AI客服项目演示",
+                title="Duncan 的 AI 客服系统",
                 content="提供虚构店铺的本地对话演示，可展示知识检索、模型回复和人工升级建议；不会连接拼多多或发送真实消息。实时平台与模型服务需单独配置。",
                 isClosable=True,
                 duration=-1,
