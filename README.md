@@ -2,13 +2,11 @@
 
 基于 PyQt6 的 Windows 电商客服桌面应用，集成拼多多消息接入、AI Agent、商品与客服知识库以及人工接管能力。项目以拼多多为当前平台渠道，模型服务和店铺账号需按实际部署环境配置。
 
-本项目基于 [JC0v0/Customer-Agent](https://github.com/JC0v0/Customer-Agent) 进行修改，保留上游 Git 历史。当前改动包括应用信息、项目入口和本地对话验证页。
-
 ## 下载安装
 
 > 当前仓库提供源码启动方式，尚未发布独立安装包。
 
-如需使用桌面应用，请按下文安装依赖并启动。项目中现有上游打包产物不代表当前修改版已完成发布验证。
+如需使用桌面应用，请按下文安装依赖并启动。项目中已有的打包产物不代表当前版本已完成发布验证。
 
 ## 功能特性
 
@@ -98,7 +96,7 @@ python scripts/build_win_exe.py --clean
 ## 项目结构
 
 ```text
-Customer-Agent/
+pinduoduo-ai-customer-service/
 ├── Agent/                  # Agent 会话、模型客户端与工具
 ├── Channel/                # 渠道集成，当前包括拼多多
 ├── Message/                # 消息队列、路由和处理器
@@ -128,4 +126,4 @@ Customer-Agent/
 
 ## License
 
-上游 README 声明 MIT；当前仓库快照没有独立 `LICENSE` 文件。公开发布前应核对授权范围并补齐许可文本及版权声明。
+当前仓库没有独立的 `LICENSE` 文件。公开发布前应明确适用的许可条款并补充相应文件。
