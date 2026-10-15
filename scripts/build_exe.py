@@ -134,9 +134,9 @@ def create_distribution_files(dist_path):
 - 首次运行时会在用户数据目录生成 config.json
 - 请勿把包含 API 密钥的 config.json 提交到代码仓库
 
-技术支持：
-- 项目地址: https://github.com/your-repo/Agent-Customer
-- 问题反馈: 请通过 GitHub Issues 提交
+演示说明：
+- 本程序用于 AI 客服求职作品演示
+- 拼多多账号与模型服务需要在演示机器上单独配置
 """
 
     (dist_path / "README.txt").write_text(readme_content, encoding="utf-8")
@@ -164,10 +164,10 @@ def create_installer_script(dist_path):
 ; Agent-Customer 安装包脚本
 ; 需要 NSIS (https://nsis.sourceforge.io/)
 
-!define APP_NAME "Agent-Customer"
+!define APP_NAME "Duncan AI客服项目演示"
 !define APP_VERSION "1.1.0"
-!define APP_PUBLISHER "Agent-Customer Team"
-!define APP_URL "https://github.com/your-repo/Agent-Customer"
+!define APP_PUBLISHER "Duncan"
+!define APP_URL ""
 !define APP_EXE "AgentCustomer.exe"
 
 ; 包含现代 UI

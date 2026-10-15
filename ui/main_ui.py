@@ -1,7 +1,7 @@
 import sys
 from PyQt6.QtCore import Qt, QTimer
 from PyQt6.QtWidgets import QApplication, QFrame, QHBoxLayout, QLabel
-from PyQt6.QtGui import QFont, QIcon, QPixmap
+from PyQt6.QtGui import QFont, QIcon
 from qfluentwidgets import FluentWindow,qrouter, NavigationItemPosition
 from qfluentwidgets import FluentIcon as FIF
 from qfluentwidgets import SubtitleLabel, TeachingTip, TeachingTipTailPosition
@@ -29,7 +29,7 @@ class MainWindow(FluentWindow):
     def __init__(self):
         super().__init__()
         t = time.perf_counter()
-        self.setWindowTitle('拼多多AI客服助手')
+        self.setWindowTitle('Duncan 的 AI客服项目演示')
         self.setWindowIcon(QIcon(str(get_resource_path("icon/icon.ico"))))
         self.logger = get_logger("MainWindow")
         self.logger.info(f"  基础属性初始化: {time.perf_counter()-t:.2f}s")
@@ -41,6 +41,7 @@ class MainWindow(FluentWindow):
         self.user_manager_view = None
         self.log_view = None
         self.settingInterface = None
+        self.demo_chat_view = None
 
         t = time.perf_counter()
         # 立即初始化导航和窗口
@@ -90,6 +91,10 @@ class MainWindow(FluentWindow):
         t = time.perf_counter()
         self.settingInterface = SettingUI(self)
         self.logger.info(f"  SettingUI: {time.perf_counter()-t:.2f}s")
+        t = time.perf_counter()
+        from ui.demo_chat_ui import DemoChatUI
+        self.demo_chat_view = DemoChatUI(self)
+        self.logger.info(f"  DemoChatUI: {time.perf_counter()-t:.2f}s")
 
         # 初始化导航
         self.initNavigation()
@@ -100,15 +105,16 @@ class MainWindow(FluentWindow):
         self.navigationInterface.setExpandWidth(200)
         self.navigationInterface.setMinimumWidth(200)
         self.addSubInterface(self.monitor_view, FIF.CHAT, '自动回复')
+        self.addSubInterface(self.demo_chat_view, FIF.CHAT, '客服对话演示')
         self.addSubInterface(self.keyword_manager_view, FIF.EDIT, '关键词管理')
         self.addSubInterface(self.user_manager_view, FIF.PEOPLE, '账号管理')
         self.addSubInterface(self.knowledge_view, FIF.DOCUMENT, '知识库')
-        # 添加二维码按钮
+        # 添加项目介绍入口
         self.navigationInterface.addItem(
-            routeKey='contact_us',
-            icon=FIF.QRCODE,
-            text='联系我们',
-            onClick=self.showQRCode,
+            routeKey='project_info',
+            icon=FIF.DOCUMENT,
+            text='项目介绍',
+            onClick=self.showProjectInfo,
             selectable=False,
             position=NavigationItemPosition.BOTTOM
         )
@@ -129,15 +135,14 @@ class MainWindow(FluentWindow):
         self.showMaximized()
 
 
-    def showQRCode(self):
-        """显示二维码TeachingTip"""
+    def showProjectInfo(self):
+        """显示求职演示项目说明"""
         try:
             tip = TeachingTip.create(
                 target=self.navigationInterface,
-                image=str(get_resource_path("icon/Customer-Agent-qr.png")),
-                icon=FIF.PEOPLE,
-                title="联系我们",
-                content="扫码关注获取更多信息和支持",
+                icon=FIF.DOCUMENT,
+                title="Duncan 的 AI客服项目演示",
+                content="提供虚构店铺的本地对话演示，可展示知识检索、模型回复和人工升级建议；不会连接拼多多或发送真实消息。实时平台与模型服务需单独配置。",
                 isClosable=True,
                 duration=-1,
                 tailPosition=TeachingTipTailPosition.LEFT,

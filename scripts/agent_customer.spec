@@ -81,7 +81,6 @@ a = Analysis(
     datas=[
         # 图标文件
         (str(PROJECT_ROOT / "icon" / "icon.ico"), "icon"),
-        (str(PROJECT_ROOT / "icon" / "Customer-Agent-qr.png"), "icon"),
     ] + _pw_datas + _llm_datas,
     hiddenimports=[
         # === PyQt6 & Fluent Widgets ===

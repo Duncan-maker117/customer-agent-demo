@@ -21,5 +21,5 @@ __all__ = [
 
 # 版本信息
 __version__ = '1.0.0'
-__author__ = 'Agent-Customer Team'
-__description__ = '拼多多API统一请求基类和相关API实现' 
+__author__ = 'Duncan'
+__description__ = '拼多多API统一请求基类和相关API实现'
