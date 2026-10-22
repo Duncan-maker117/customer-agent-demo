@@ -4,7 +4,7 @@ import { fileURLToPath } from 'node:url';
 import { resolve } from 'node:path';
 
 const root = fileURLToPath(new URL('../02_网页演示/', import.meta.url));
-const types = { 'index.html': 'text/html', 'styles.css': 'text/css', 'app.js': 'text/javascript', 'engine.js': 'text/javascript', 'favicon.svg': 'image/svg+xml' };
+const types = { 'index.html': 'text/html', 'styles.css': 'text/css', 'app.js': 'text/javascript', 'engine.js': 'text/javascript', 'management.js': 'text/javascript', 'favicon.svg': 'image/svg+xml' };
 const port = Number(process.env.DEMO_PORT || 4178);
 if (!Number.isInteger(port) || port < 1024 || port > 65535) throw new Error('DEMO_PORT must be between 1024 and 65535');
 const server = createServer(async (request, response) => {

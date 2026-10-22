@@ -33,12 +33,13 @@ jobs:
         run: |
           node --check '02_网页演示/app.js'
           node --check '02_网页演示/engine.js'
+          node --check '02_网页演示/management.js'
           node --test tests/web_demo.test.mjs
       - uses: actions/configure-pages@v5
       - name: Package only public browser assets
         run: |
           mkdir -p _site
-          cp '02_网页演示/index.html' '02_网页演示/styles.css' '02_网页演示/app.js' '02_网页演示/engine.js' '02_网页演示/favicon.svg' _site/
+          cp '02_网页演示/index.html' '02_网页演示/styles.css' '02_网页演示/app.js' '02_网页演示/engine.js' '02_网页演示/management.js' '02_网页演示/favicon.svg' _site/
           touch _site/.nojekyll
       - uses: actions/upload-pages-artifact@v4
         with:

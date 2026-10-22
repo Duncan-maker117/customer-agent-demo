@@ -1,66 +1,816 @@
 <!doctype html>
 <html lang="zh-CN">
-<head>
-  <meta charset="utf-8">
-  <meta name="viewport" content="width=device-width,initial-scale=1">
-  <meta name="description" content="Duncan 客服工作台交互体验：商品咨询、知识依据、售后处理与人工协同。使用虚构资料，在浏览器本地运行。">
-  <meta name="theme-color" content="#08776f">
-  <meta http-equiv="Content-Security-Policy" content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'">
-  <title>Duncan 客服工作台 · 在线体验</title>
-  <link rel="icon" type="image/svg+xml" href="./favicon.svg">
-  <link rel="stylesheet" href="./styles.css">
-  <script src="./app.js" type="module"></script>
-</head>
-<body>
-  <a class="skip-link" href="#main-content">跳到工作区</a>
-  <div class="app-shell">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <meta
+      name="description"
+      content="Duncan 的 AI 客服系统网页演示：自动回复、关键词管理、账号管理、知识库、日志与设置。浅色 Fluent 布局，使用虚构数据在浏览器本地体验。"
+    />
+    <meta name="theme-color" content="#f3f3f3" />
+    <meta
+      http-equiv="Content-Security-Policy"
+      content="default-src 'self'; script-src 'self'; style-src 'self'; img-src 'self' data:; connect-src 'none'; object-src 'none'; base-uri 'self'; form-action 'none'"
+    />
+    <title>Duncan 的 AI 客服系统 · 网页演示</title>
+    <link rel="icon" type="image/svg+xml" href="./favicon.svg" />
+    <link rel="stylesheet" href="./styles.css?v=desktop-20261022" />
+    <script src="./app.js?v=desktop-20261022" type="module"></script>
+  </head>
+  <body>
+    <a class="skip-link" href="#main-content">跳到主要内容</a>
+    <header class="titlebar">
+      <div class="window-title">
+        <button
+          id="back-button"
+          class="icon-button"
+          type="button"
+          aria-label="返回自动回复"
+        >
+          <span data-icon="back"></span></button
+        ><img src="./favicon.svg" width="20" height="20" alt="" /><span
+          >Duncan 的 AI 客服系统</span
+        >
+      </div>
+      <div class="titlebar-actions">
+        <span class="demo-label">网页演示 · 虚构数据</span
+        ><button
+          id="reset-button"
+          class="icon-button"
+          type="button"
+          aria-label="重置体验"
+          title="重置体验"
+        >
+          <span data-icon="refresh"></span>
+        </button>
+      </div>
+    </header>
     <aside class="sidebar" aria-label="主导航">
-      <a class="brand" href="#conversations" aria-label="Duncan 客服工作台首页">
-        <img src="./favicon.svg" width="36" height="36" alt="">
-        <span><strong>Duncan</strong><small>客服工作台</small></span>
-      </a>
-      <div class="workspace-label">工作空间</div>
+      <button
+        id="nav-toggle"
+        class="icon-button nav-toggle"
+        type="button"
+        aria-label="展开或收起导航"
+        aria-expanded="true"
+      >
+        <span data-icon="menu"></span>
+      </button>
       <nav class="nav-list">
-        <a class="nav-item active" href="#conversations" data-view="conversations" aria-label="会话中心" aria-current="page"><span data-icon="messages"></span><span>会话中心</span><span class="nav-count">3</span></a>
-        <a class="nav-item" href="#knowledge" data-view="knowledge" aria-label="知识库"><span data-icon="book"></span><span>知识库</span></a>
-        <a class="nav-item" href="#activity" data-view="activity" aria-label="处理记录"><span data-icon="activity"></span><span>处理记录</span><span id="activity-dot" class="activity-dot" hidden></span></a>
+        <a
+          class="nav-item active"
+          href="#auto-reply"
+          data-view="auto-reply"
+          aria-label="自动回复"
+          aria-current="page"
+          ><span data-icon="messages"></span><span>自动回复</span></a
+        ><a
+          class="nav-item"
+          href="#conversations"
+          data-view="conversations"
+          aria-label="客服对话演示"
+          ><span data-icon="messages"></span><span>客服对话演示</span></a
+        ><a
+          class="nav-item"
+          href="#keywords"
+          data-view="keywords"
+          aria-label="关键词管理"
+          ><span data-icon="edit"></span><span>关键词管理</span></a
+        ><a
+          class="nav-item"
+          href="#accounts"
+          data-view="accounts"
+          aria-label="账号管理"
+          ><span data-icon="users"></span><span>账号管理</span></a
+        ><a
+          class="nav-item"
+          href="#knowledge"
+          data-view="knowledge"
+          aria-label="知识库"
+          ><span data-icon="document"></span><span>知识库</span></a
+        >
       </nav>
-      <div class="sidebar-note"><span data-icon="sparkles"></span><p>让每一次回复<br>都有据可循。</p><span class="sidebar-note-rule"></span><small>知识检索 · 人工协同</small></div>
-      <div class="sidebar-footer"><span class="owner-avatar">D</span><div><strong>Duncan</strong><small>交互体验工作区</small></div></div>
+      <nav class="nav-bottom" aria-label="其他功能">
+        <button
+          id="about-button"
+          class="nav-item"
+          type="button"
+          aria-label="项目介绍"
+        >
+          <span data-icon="document"></span><span>项目介绍</span></button
+        ><a
+          class="nav-item"
+          href="#activity"
+          data-view="activity"
+          aria-label="日志管理"
+          ><span data-icon="history"></span><span>日志管理</span
+          ><span id="activity-dot" class="activity-dot" hidden></span></a
+        ><a
+          class="nav-item"
+          href="#settings"
+          data-view="settings"
+          aria-label="设置"
+          ><span data-icon="settings"></span><span>设置</span></a
+        >
+      </nav>
     </aside>
-
+    <button
+      id="nav-backdrop"
+      class="nav-backdrop"
+      type="button"
+      aria-label="关闭导航"
+      hidden
+    ></button>
     <div class="workspace">
-      <header class="topbar"><div class="breadcrumb">工作空间<span>/</span><strong id="breadcrumb-current">会话中心</strong></div><div class="topbar-actions"><span class="demo-badge"><span></span>静态交互演示</span><button class="icon-button" id="about-button" type="button" aria-label="查看体验说明" title="体验说明"><span data-icon="info"></span></button></div></header>
       <main id="main-content" tabindex="-1">
-        <div class="page-heading"><div><p class="eyebrow">CUSTOMER SERVICE WORKSPACE</p><h1 id="page-title">把问题交给客服，把依据留在眼前。</h1><p id="page-description">选择一个场景，体验从客户提问到知识匹配与人工协同的完整过程。</p></div><button class="button button-secondary reset-button" id="reset-button" type="button"><span data-icon="refresh"></span>重置体验</button></div>
+        <div class="page-heading" id="page-heading">
+          <div>
+            <h1 id="page-title">自动回复管理</h1>
+            <p id="page-description">共 1 个账号</p>
+            <p id="running-stats" class="running-stats">运行中: 0 个（模拟）</p>
+          </div>
+          <div class="page-actions">
+            <div class="action-group" data-for-view="auto-reply">
+              <button
+                class="button button-secondary"
+                id="refresh-auto"
+                type="button"
+              >
+                <span data-icon="refresh"></span>刷新</button
+              ><button
+                class="button button-primary"
+                id="start-all"
+                type="button"
+              >
+                <span data-icon="play"></span>开始所有</button
+              ><button
+                class="button button-secondary"
+                id="stop-all"
+                type="button"
+              >
+                <span data-icon="stop"></span>停止所有
+              </button>
+            </div>
+            <div class="action-group" data-for-view="keywords" hidden>
+              <button
+                class="button button-secondary"
+                id="import-keywords"
+                type="button"
+              >
+                <span data-icon="import"></span>批量导入</button
+              ><button
+                class="button button-primary"
+                id="add-keyword"
+                type="button"
+              >
+                <span data-icon="plus"></span>添加关键词
+              </button>
+            </div>
+            <div class="action-group" data-for-view="accounts" hidden>
+              <button
+                class="button button-secondary"
+                id="refresh-accounts"
+                type="button"
+              >
+                <span data-icon="refresh"></span>刷新</button
+              ><button
+                class="button button-primary"
+                id="add-account"
+                type="button"
+              >
+                <span data-icon="plus"></span>添加账号
+              </button>
+            </div>
+            <div class="action-group" data-for-view="activity" hidden>
+              <button
+                class="button button-secondary"
+                id="clear-activity"
+                type="button"
+              >
+                <span data-icon="trash"></span>清空</button
+              ><button
+                class="button button-primary"
+                id="export-activity"
+                type="button"
+              >
+                <span data-icon="download"></span>导出
+              </button>
+            </div>
+            <div class="action-group" data-for-view="settings" hidden>
+              <button
+                class="button button-secondary"
+                id="reset-settings"
+                type="button"
+              >
+                <span data-icon="refresh"></span>重置</button
+              ><button
+                class="button button-primary"
+                id="save-settings"
+                type="button"
+              >
+                <span data-icon="save"></span>保存
+              </button>
+            </div>
+          </div>
+        </div>
 
-        <section id="view-conversations" class="view active" aria-label="会话中心">
-          <div class="conversation-layout">
-            <aside class="scenario-panel" aria-label="体验场景"><div class="panel-heading"><h2>体验场景</h2><span class="subtle-label">03</span></div><div id="scenario-list" class="scenario-list"></div><div class="scenario-footnote"><span data-icon="shield"></span><p>全部为虚构场景<br>无需登录，不上传输入</p></div></aside>
-
-            <section class="chat-panel" aria-labelledby="chat-title">
-              <div class="chat-heading"><div class="shop-avatar"><span data-icon="store"></span></div><div class="chat-identity"><h2 id="chat-title">轻氧生活 · 商品咨询</h2><p><span class="status-dot"></span><span id="conversation-status">自动回复体验</span><span class="separator">·</span><span>虚构店铺</span></p></div><button id="evidence-toggle" class="icon-button mobile-evidence" type="button" aria-label="查看知识依据" aria-expanded="false"><span data-icon="book"></span></button></div>
-              <div id="messages" class="messages" role="log" aria-label="会话消息" aria-live="polite" aria-relevant="additions"></div>
-              <div id="handoff-bar" class="handoff-bar" hidden><div><span data-icon="user"></span><span id="handoff-text"></span></div><div class="handoff-actions"><button id="accept-handoff" class="button button-small" type="button">模拟人工接管</button><button id="resume-auto" class="text-button" type="button">恢复自动回复</button></div></div>
-              <div class="composer-area"><div class="quick-prompt-heading"><span data-icon="sparkles"></span>试着问一问</div><div id="quick-prompts" class="quick-prompts"></div><form id="chat-form" class="composer"><label class="sr-only" for="message-input">输入模拟客户问题</label><textarea id="message-input" rows="2" maxlength="500" placeholder="输入你的问题，例如：这件 T 恤是什么面料？"></textarea><div class="composer-toolbar"><span id="input-counter">0 / 500</span><button id="send-button" class="button button-primary" type="submit"><span>发送问题</span><span data-icon="arrow-up"></span></button></div></form><p class="composer-note"><span data-icon="lock"></span>本地规则匹配 · 未调用大模型 · 不发送真实平台消息</p></div>
-            </section>
-
-            <aside id="evidence-panel" class="evidence-panel" aria-label="回答依据"><div class="panel-heading"><h2>知识与依据</h2><span class="tiny-label">可追溯</span></div><div class="product-preview"><div class="product-art"><span data-icon="shirt"></span><span>LIGHT COTTON</span></div><div><p class="subtle-label">当前场景商品 · 虚构</p><h3>轻氧棉感 T 恤</h3><p>舒适日常系列 · T-001</p></div></div><div class="evidence-title"><h3>本次知识匹配</h3><span id="evidence-count" class="count-badge">0</span></div><div id="evidence-content" class="evidence-content"><div class="evidence-empty"><span data-icon="search"></span><p>回复的依据，也可以看见。</p><small>发送一个问题，这里会展示命中的知识条目与处理方式。</small></div></div><div class="knowledge-entry"><span data-icon="book"></span><div><strong>试试修改知识，再问一次</strong><p>回复会随当前知识内容变化。</p><a href="#knowledge">打开知识库 <span aria-hidden="true">↗</span></a></div></div></aside>
+        <section
+          id="view-auto-reply"
+          class="view active"
+          aria-label="自动回复管理"
+        >
+          <div id="auto-account-list" class="account-list"></div>
+          <p id="auto-empty" class="empty-message" hidden>
+            还没有演示账号，请先在账号管理中添加。
+          </p>
+          <div class="view-hint">
+            <span data-icon="info"></span>
+            <p>
+              示例账号仅模拟上线和回复状态，不连接真实店铺。<a
+                href="#conversations"
+                >打开客服对话演示</a
+              >可直接提问。
+            </p>
           </div>
         </section>
 
-        <section id="view-knowledge" class="view" aria-label="知识库" hidden><div class="knowledge-toolbar"><div class="search-field"><span data-icon="search"></span><label class="sr-only" for="knowledge-search">搜索知识标题和内容</label><input id="knowledge-search" type="search" placeholder="搜索知识标题、关键词或内容"></div><button class="button button-primary" id="add-knowledge" type="button"><span data-icon="plus"></span>新增知识</button></div><div class="knowledge-description"><span data-icon="info"></span><p>这里的资料都是示例。编辑只在当前页面生效，刷新后恢复；请勿填写真实客户信息。</p></div><div class="knowledge-filters" role="group" aria-label="知识分类"><button type="button" class="filter-button active" data-category="all" aria-pressed="true">全部知识 <span id="knowledge-total">3</span></button><button type="button" class="filter-button" data-category="商品知识" aria-pressed="false">商品知识</button><button type="button" class="filter-button" data-category="客服知识" aria-pressed="false">客服知识</button></div><div id="knowledge-list" class="knowledge-list"></div><p id="knowledge-empty" class="empty-message" hidden>没有匹配的条目，试试其他关键词。</p></section>
+        <section
+          id="view-conversations"
+          class="view"
+          aria-label="客服对话演示"
+          hidden
+        >
+          <p class="shop-description">当前店铺：轻氧生活（虚构数据）</p>
+          <div class="notice">
+            本页使用虚构资料，执行浏览器本地知识匹配，未调用大模型；不会连接拼多多或发送真实消息。
+          </div>
+          <div class="scenario-toolbar">
+            <span>演示场景：</span>
+            <div id="scenario-list" class="scenario-list"></div>
+          </div>
+          <p class="example-caption">点击示例问题，体验不同处理结果</p>
+          <div id="quick-prompts" class="quick-prompts"></div>
+          <div class="conversation-layout">
+            <section class="chat-panel" aria-labelledby="chat-title">
+              <div class="chat-heading">
+                <h2 id="chat-title">客户对话</h2>
+                <span id="conversation-status">自动回复体验</span
+                ><button
+                  id="evidence-toggle"
+                  class="icon-button mobile-evidence"
+                  type="button"
+                  aria-label="查看知识依据"
+                  aria-expanded="false"
+                >
+                  <span data-icon="document"></span>
+                </button>
+              </div>
+              <div
+                id="messages"
+                class="messages"
+                role="log"
+                aria-label="会话消息"
+                aria-live="polite"
+                aria-relevant="additions"
+              ></div>
+              <div id="handoff-bar" class="handoff-bar" hidden>
+                <span id="handoff-text"></span>
+                <div class="handoff-actions">
+                  <button
+                    id="accept-handoff"
+                    class="button button-small"
+                    type="button"
+                  >
+                    模拟人工接管</button
+                  ><button
+                    id="resume-auto"
+                    class="button button-small button-secondary"
+                    type="button"
+                  >
+                    恢复自动回复
+                  </button>
+                </div>
+              </div>
+            </section>
+            <aside
+              id="evidence-panel"
+              class="evidence-panel"
+              aria-label="回答依据"
+            >
+              <div class="evidence-title">
+                <h2>本轮处理信息</h2>
+                <span id="evidence-count">0</span>
+              </div>
+              <div id="evidence-content" class="evidence-content"></div>
+              <a class="knowledge-entry" href="#knowledge"
+                >打开知识库，修改示例资料</a
+              >
+            </aside>
+          </div>
+          <form id="chat-form" class="composer">
+            <label class="sr-only" for="message-input">输入客户问题</label
+            ><textarea
+              id="message-input"
+              rows="1"
+              maxlength="500"
+              placeholder="输入客户问题，例如：这件衣服什么时候发货？"
+            ></textarea
+            ><span id="input-counter">0 / 500</span
+            ><label class="disabled-model"
+              ><input type="checkbox" disabled />使用已配置模型</label
+            ><button
+              id="send-button"
+              class="button button-primary"
+              type="submit"
+            >
+              处理问题
+            </button>
+          </form>
+        </section>
 
-        <section id="view-activity" class="view" aria-label="处理记录" hidden><div class="activity-summary"><div><span>本次客户提问</span><strong id="metric-questions">0</strong></div><div><span>有知识依据的回复</span><strong id="metric-grounded">0</strong></div><div><span>人工协同建议</span><strong id="metric-handoffs">0</strong></div></div><div class="activity-heading"><div><h2>当前体验记录</h2><p>仅记录本页面内发生的操作；刷新后清空。</p></div><button class="button button-secondary" id="export-activity" type="button"><span data-icon="download"></span>导出记录</button></div><div id="activity-list" class="activity-list"></div></section>
+        <section id="view-keywords" class="view" aria-label="关键词管理" hidden>
+          <div class="table-scroll">
+            <table class="data-table keyword-table">
+              <thead>
+                <tr>
+                  <th scope="col">关键词</th>
+                  <th scope="col">操作</th>
+                </tr>
+              </thead>
+              <tbody id="keyword-list"></tbody>
+            </table>
+          </div>
+          <p class="view-caption">
+            关键词管理仅模拟本地维护，不写入桌面数据库，也不改变独立对话演示的转人工规则。
+          </p>
+        </section>
+
+        <section id="view-accounts" class="view" aria-label="账号管理" hidden>
+          <div id="managed-account-list" class="account-list"></div>
+          <p id="accounts-empty" class="empty-message" hidden>
+            还没有账号，点击“添加账号”创建一条虚构记录。
+          </p>
+          <p class="view-caption">
+            这里只保存示例店铺名称与账号昵称，不接收登录密码、Cookie
+            或真实平台凭证。
+          </p>
+        </section>
+
+        <section id="view-knowledge" class="view" aria-label="知识库" hidden>
+          <div class="shop-row">
+            <label for="knowledge-shop">当前店铺：</label
+            ><select id="knowledge-shop">
+              <option>轻氧生活（虚构店铺）</option>
+            </select>
+          </div>
+          <div class="knowledge-tabs" role="group" aria-label="知识类型">
+            <button
+              class="filter-button active"
+              data-category="商品知识"
+              type="button"
+              aria-pressed="true"
+            >
+              产品知识</button
+            ><button
+              class="filter-button"
+              data-category="客服知识"
+              type="button"
+              aria-pressed="false"
+            >
+              客服知识
+            </button>
+          </div>
+          <div class="knowledge-toolbar">
+            <div class="toolbar-left">
+              <button
+                class="button button-primary"
+                id="add-knowledge"
+                type="button"
+              >
+                添加产品知识</button
+              ><button
+                class="button button-secondary"
+                id="export-knowledge"
+                type="button"
+              >
+                导出
+              </button>
+            </div>
+            <label class="search-field"
+              ><span class="sr-only">搜索知识</span
+              ><input
+                id="knowledge-search"
+                type="search"
+                placeholder="搜索标题、内容或关键词"
+            /></label>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table knowledge-table">
+              <thead>
+                <tr>
+                  <th scope="col">标题</th>
+                  <th scope="col">内容</th>
+                  <th scope="col">标签</th>
+                  <th scope="col">状态</th>
+                  <th scope="col">操作</th>
+                </tr>
+              </thead>
+              <tbody id="knowledge-list"></tbody>
+            </table>
+          </div>
+          <p id="knowledge-empty" class="empty-message" hidden>
+            没有匹配的知识条目。
+          </p>
+          <p class="view-caption">
+            <span id="knowledge-total">3</span>
+            条示例知识。编辑后立即用于对话匹配；刷新恢复初始资料。
+          </p>
+        </section>
+
+        <section id="view-activity" class="view" aria-label="日志管理" hidden>
+          <div class="log-toolbar">
+            <label
+              >日志级别：<select id="log-level">
+                <option value="all">全部级别</option>
+                <option value="INFO">INFO</option>
+                <option value="WARN">WARN</option>
+              </select></label
+            ><label class="search-field"
+              ><span class="sr-only">搜索日志</span
+              ><input id="log-search" type="search" placeholder="搜索日志内容"
+            /></label>
+          </div>
+          <div class="table-scroll">
+            <table class="data-table log-table">
+              <thead>
+                <tr>
+                  <th scope="col">时间</th>
+                  <th scope="col">级别</th>
+                  <th scope="col">模块</th>
+                  <th scope="col">消息</th>
+                </tr>
+              </thead>
+              <tbody id="activity-list"></tbody>
+            </table>
+          </div>
+          <p class="view-caption" id="log-count">
+            当前没有日志。操作账号、知识或对话后即可查看。
+          </p>
+        </section>
+
+        <section id="view-settings" class="view" aria-label="系统设置" hidden>
+          <div class="settings-stack">
+            <section class="settings-card">
+              <h2>LLM 模型配置</h2>
+              <div class="setting-row">
+                <label for="setting-provider">模型供应商：</label
+                ><select id="setting-provider">
+                  <option>OpenAI-compatible</option>
+                  <option>DeepSeek</option>
+                  <option>火山引擎</option>
+                  <option>Kimi / Moonshot</option>
+                  <option>智谱 / Z.AI</option>
+                  <option>Qwen / DashScope</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <label for="setting-url">API Base URL：</label
+                ><input
+                  id="setting-url"
+                  value="https://example.invalid/v1"
+                  disabled
+                />
+              </div>
+              <div class="setting-row">
+                <label for="setting-trust">端点信任：</label
+                ><select id="setting-trust" disabled>
+                  <option>供应商默认 / 远程 HTTPS</option>
+                </select>
+              </div>
+              <div class="setting-row">
+                <label for="setting-key">API Key：</label
+                ><input
+                  id="setting-key"
+                  type="password"
+                  placeholder="网页演示不接收真实 API Key"
+                  disabled
+                />
+              </div>
+              <div class="setting-row">
+                <label for="setting-model">模型名称：</label
+                ><input
+                  id="setting-model"
+                  value="静态规则匹配（未调用模型）"
+                  disabled
+                />
+              </div>
+              <button
+                class="button button-secondary"
+                id="restore-provider"
+                type="button"
+              >
+                恢复供应商默认
+              </button>
+              <p>
+                此处仅演示配置表单；选择和保存不会产生模型请求。真实模型需在桌面应用中配置。
+              </p>
+            </section>
+            <section class="settings-card">
+              <h2>AI 提示词配置</h2>
+              <div class="setting-row prompt-row">
+                <label for="setting-prompt">行为指令：</label
+                ><textarea
+                  id="setting-prompt"
+                  rows="4"
+                  maxlength="3000"
+                ></textarea>
+              </div>
+              <p>提示词仅用于表单体验，不改变当前网页的本地匹配规则。</p>
+            </section>
+            <section class="settings-card">
+              <h2>业务时间设置</h2>
+              <div class="setting-row">
+                <label for="setting-start">开始时间：</label
+                ><input type="time" id="setting-start" value="08:00" required />
+              </div>
+              <div class="setting-row">
+                <label for="setting-end">结束时间：</label
+                ><input type="time" id="setting-end" value="23:00" required />
+              </div>
+              <p>
+                演示业务时间的配置与保存。独立的客服对话演示不受此时间限制。
+              </p>
+              <p id="settings-error" class="form-error" role="alert" hidden></p>
+              <p
+                id="settings-saved"
+                class="setting-confirmation"
+                role="status"
+                hidden
+              >
+                设置已保存在当前页面内存中，刷新后恢复。
+              </p>
+            </section>
+          </div>
+        </section>
       </main>
-      <footer class="workspace-footer"><span>Duncan 客服工作台</span><span>所有示例资料均为虚构 <span class="footer-divider">·</span> 无需账号即可体验</span></footer>
+      <footer class="workspace-footer">
+        静态网页演示 · 仅虚构数据与本地规则 · 刷新后重置
+      </footer>
     </div>
-  </div>
 
-  <dialog id="about-dialog" class="dialog"><div class="dialog-heading"><h2>关于这个在线体验</h2><button class="icon-button" data-close-dialog type="button" aria-label="关闭说明"><span data-icon="close"></span></button></div><div class="dialog-body"><p>这是 AI 客服项目的静态交互体验，用虚构店铺资料展示知识匹配、回答依据和人工协同流程。</p><ul><li>回答由浏览器内的规则与知识条目组成，未调用大模型。</li><li>不会连接拼多多，不会向真实客户发送消息，也没有真人客服在线。</li><li>输入、知识修改与处理记录保留在当前页面内存中，不上传、不写入浏览器存储。</li><li>可在知识库中修改或新增示例资料，再回到会话里提问。</li></ul><p class="dialog-footnote">静态网页不包含桌面应用的真实平台接入能力。请勿输入账号、密钥或真实客户资料。</p></div><div class="dialog-footer"><button class="button button-primary" data-close-dialog type="button">开始体验</button></div></dialog>
-  <dialog id="knowledge-dialog" class="dialog"><div class="dialog-heading"><h2 id="knowledge-dialog-title">编辑示例知识</h2><button class="icon-button" data-close-dialog type="button" aria-label="关闭编辑"><span data-icon="close"></span></button></div><form id="knowledge-form"><div class="dialog-body form-fields"><label>知识标题<input id="edit-title" name="title" maxlength="60" required></label><label>分类<select id="edit-category" name="category"><option>商品知识</option><option>客服知识</option></select></label><label>匹配关键词<input id="edit-triggers" name="triggers" maxlength="160" placeholder="例如：面料，材质，成分" required><small>使用中文或英文逗号分隔，至少填写一个关键词。</small></label><label>知识内容<textarea id="edit-content" name="content" rows="5" maxlength="1200" required></textarea></label><p id="knowledge-form-error" class="form-error" role="alert" hidden></p><p class="dialog-footnote">仅用于当前页面的模拟体验，请勿填写真实客户资料。</p></div><div class="dialog-footer"><button class="button button-secondary" data-close-dialog type="button">取消</button><button class="button button-primary" type="submit">保存并用于匹配</button></div></form></dialog>
-  <dialog id="reset-dialog" class="dialog compact-dialog"><div class="dialog-heading"><h2>重新开始体验？</h2><button class="icon-button" data-close-dialog type="button" aria-label="取消重置"><span data-icon="close"></span></button></div><div class="dialog-body"><p>当前对话、知识修改与处理记录将清空，并恢复初始示例。</p></div><div class="dialog-footer"><button class="button button-secondary" data-close-dialog type="button">取消</button><button id="confirm-reset" class="button button-primary" type="button">重置体验</button></div></dialog>
-  <div id="toast" class="toast" role="status" hidden></div>
-  <noscript><div class="noscript-message">请启用 JavaScript 以使用客服交互体验。此页面不会调用外部模型或上传你的输入。</div></noscript>
-</body>
+    <dialog id="about-dialog" class="dialog">
+      <div class="dialog-heading">
+        <h2>项目介绍</h2>
+        <button
+          class="icon-button"
+          data-close-dialog
+          type="button"
+          aria-label="关闭介绍"
+        >
+          <span data-icon="close"></span>
+        </button>
+      </div>
+      <div class="dialog-body">
+        <p>
+          Duncan 的 AI
+          客服系统网页演示，按桌面管理界面的导航、表格、账号卡片和设置表单组织。
+        </p>
+        <ul>
+          <li>自动回复、关键词、账号、知识库、日志与设置均可切换体验。</li>
+          <li>账号上线、验证和开始回复均为本地状态模拟，未登录真实平台。</li>
+          <li>
+            对话使用虚构知识执行规则匹配，未调用大模型，也没有真人客服在线。
+          </li>
+          <li>所有输入和修改只存当前页面内存，不上传、不写入浏览器存储。</li>
+        </ul>
+        <p class="dialog-footnote">
+          请勿输入真实客户资料、密码、Cookie 或模型密钥。
+        </p>
+      </div>
+      <div class="dialog-footer">
+        <button class="button button-primary" data-close-dialog type="button">
+          知道了
+        </button>
+      </div>
+    </dialog>
+    <dialog id="knowledge-dialog" class="dialog">
+      <div class="dialog-heading">
+        <h2 id="knowledge-dialog-title">编辑知识</h2>
+        <button
+          class="icon-button"
+          data-close-dialog
+          type="button"
+          aria-label="关闭编辑"
+        >
+          <span data-icon="close"></span>
+        </button>
+      </div>
+      <form id="knowledge-form">
+        <div class="dialog-body form-fields">
+          <label>标题<input id="edit-title" maxlength="60" required /></label
+          ><label
+            >分类<select id="edit-category">
+              <option>商品知识</option>
+              <option>客服知识</option>
+            </select></label
+          ><label
+            >匹配关键词<input
+              id="edit-triggers"
+              maxlength="160"
+              placeholder="例如：面料，材质，成分"
+              required
+            /><small>使用中文或英文逗号分隔。</small></label
+          ><label
+            >内容<textarea
+              id="edit-content"
+              rows="5"
+              maxlength="1200"
+              required
+            ></textarea>
+          </label>
+          <p
+            id="knowledge-form-error"
+            class="form-error"
+            role="alert"
+            hidden
+          ></p>
+          <p class="dialog-footnote">只使用虚构资料，修改仅在当前页面生效。</p>
+        </div>
+        <div class="dialog-footer">
+          <button
+            class="button button-secondary"
+            data-close-dialog
+            type="button"
+          >
+            取消</button
+          ><button class="button button-primary" type="submit">
+            保存并用于匹配
+          </button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="keyword-dialog" class="dialog compact-dialog">
+      <div class="dialog-heading">
+        <h2 id="keyword-dialog-title">添加关键词</h2>
+        <button
+          class="icon-button"
+          data-close-dialog
+          type="button"
+          aria-label="关闭关键词编辑"
+        >
+          <span data-icon="close"></span>
+        </button>
+      </div>
+      <form id="keyword-form">
+        <div class="dialog-body form-fields">
+          <label
+            >关键词<input id="keyword-input" maxlength="40" required
+          /></label>
+          <p id="keyword-error" class="form-error" role="alert" hidden></p>
+        </div>
+        <div class="dialog-footer">
+          <button
+            class="button button-secondary"
+            data-close-dialog
+            type="button"
+          >
+            取消</button
+          ><button class="button button-primary" type="submit">确定</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="import-dialog" class="dialog">
+      <div class="dialog-heading">
+        <h2>批量导入关键词</h2>
+        <button
+          class="icon-button"
+          data-close-dialog
+          type="button"
+          aria-label="关闭导入"
+        >
+          <span data-icon="close"></span>
+        </button>
+      </div>
+      <form id="import-form">
+        <div class="dialog-body form-fields">
+          <label
+            >关键词列表<textarea
+              id="import-input"
+              rows="7"
+              maxlength="10000"
+              placeholder="每行一个，或使用逗号分隔"
+              required
+            ></textarea>
+          </label>
+          <p id="import-error" class="form-error" role="alert" hidden></p>
+          <p class="dialog-footnote">
+            重复关键词会自动跳过，最多保留 200 个关键词。
+          </p>
+        </div>
+        <div class="dialog-footer">
+          <button
+            class="button button-secondary"
+            data-close-dialog
+            type="button"
+          >
+            取消</button
+          ><button class="button button-primary" type="submit">导入</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="account-dialog" class="dialog">
+      <div class="dialog-heading">
+        <h2 id="account-dialog-title">添加演示账号</h2>
+        <button
+          class="icon-button"
+          data-close-dialog
+          type="button"
+          aria-label="关闭账号编辑"
+        >
+          <span data-icon="close"></span>
+        </button>
+      </div>
+      <form id="account-form">
+        <div class="dialog-body form-fields">
+          <label
+            >平台<select disabled>
+              <option>拼多多（模拟）</option>
+            </select></label
+          ><label
+            >店铺名称<input id="account-shop" maxlength="40" required /></label
+          ><label
+            >账号昵称<input id="account-name" maxlength="40" required
+          /></label>
+          <p id="account-error" class="form-error" role="alert" hidden></p>
+          <p class="dialog-footnote">
+            请填写虚构资料。该表单不会登录平台，不接收密码或 Cookie。
+          </p>
+        </div>
+        <div class="dialog-footer">
+          <button
+            class="button button-secondary"
+            data-close-dialog
+            type="button"
+          >
+            取消</button
+          ><button class="button button-primary" type="submit">确定</button>
+        </div>
+      </form>
+    </dialog>
+    <dialog id="confirm-dialog" class="dialog compact-dialog">
+      <div class="dialog-heading">
+        <h2 id="confirm-title">确认操作</h2>
+        <button
+          class="icon-button"
+          data-close-dialog
+          type="button"
+          aria-label="取消操作"
+        >
+          <span data-icon="close"></span>
+        </button>
+      </div>
+      <div class="dialog-body"><p id="confirm-text"></p></div>
+      <div class="dialog-footer">
+        <button class="button button-secondary" data-close-dialog type="button">
+          取消</button
+        ><button
+          class="button button-primary"
+          id="confirm-action"
+          type="button"
+        >
+          确定
+        </button>
+      </div>
+    </dialog>
+    <dialog id="reset-dialog" class="dialog compact-dialog">
+      <div class="dialog-heading">
+        <h2>重新开始体验？</h2>
+        <button
+          class="icon-button"
+          data-close-dialog
+          type="button"
+          aria-label="取消重置"
+        >
+          <span data-icon="close"></span>
+        </button>
+      </div>
+      <div class="dialog-body">
+        <p>
+          清空当前对话、账号及知识修改、关键词、设置和日志，并恢复初始示例。
+        </p>
+      </div>
+      <div class="dialog-footer">
+        <button class="button button-secondary" data-close-dialog type="button">
+          取消</button
+        ><button id="confirm-reset" class="button button-primary" type="button">
+          重置体验
+        </button>
+      </div>
+    </dialog>
+    <div id="toast" class="toast" role="status" hidden></div>
+    <noscript
+      ><div class="noscript-message">
+        请启用 JavaScript 以使用交互演示。页面不会调用外部模型或上传输入。
+      </div></noscript
+    >
+  </body>
 </html>

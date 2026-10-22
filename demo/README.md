@@ -1,8 +1,10 @@
 # 本地对话验证
 
-网页体验：[客服工作台在线演示](https://duncan-maker117.github.io/customer-agent-demo/)。使用虚构资料执行浏览器本地规则匹配，可体验知识编辑、人工接管和记录导出；未调用模型或真实平台。
+网页体验：[AI 客服系统网页演示](https://duncan-maker117.github.io/customer-agent-demo/?v=desktop-20261022)。按桌面管理界面布局组织，可体验账号状态、关键词维护、知识编辑、设置保存及独立对话；全部为本地模拟，未调用模型或真实平台。
 
-![客服工作台网页体验](web-desktop.png)
+![自动回复管理网页体验](web-desktop.png)
+
+网页其他页面：[关键词管理](web-keywords.png) · [系统设置](web-settings.png) · [客服对话演示](web-chat.png) · [手机布局](web-mobile.png)
 
 运行方式：在项目根目录执行 `uv sync --frozen`，再执行 `uv run --offline python app.py`。
 
