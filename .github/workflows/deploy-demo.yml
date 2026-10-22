@@ -1,0 +1,48 @@
+name: Deploy customer service demo
+
+on:
+  push:
+    branches: [main]
+    paths:
+      - '02_网页演示/**'
+      - 'tests/web_demo.test.mjs'
+      - '.github/workflows/deploy-demo.yml'
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: github-pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    steps:
+      - uses: actions/checkout@v6
+      - uses: actions/setup-node@v4
+        with:
+          node-version: '24'
+      - name: Check browser code and behavior boundaries
+        run: |
+          node --check '02_网页演示/app.js'
+          node --check '02_网页演示/engine.js'
+          node --test tests/web_demo.test.mjs
+      - uses: actions/configure-pages@v5
+      - name: Package only public browser assets
+        run: |
+          mkdir -p _site
+          cp '02_网页演示/index.html' '02_网页演示/styles.css' '02_网页演示/app.js' '02_网页演示/engine.js' '02_网页演示/favicon.svg' _site/
+          touch _site/.nojekyll
+      - uses: actions/upload-pages-artifact@v4
+        with:
+          path: _site
+      - name: Publish to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4
